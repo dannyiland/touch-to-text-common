@@ -1,5 +1,5 @@
  
-package edu.ucsb.cs290.touch.to.text.remote.messages;
+package edu.ucsb.cs290.touch.to.chat.remote.messages;
 
 import java.io.Serializable;
 import java.util.Date;

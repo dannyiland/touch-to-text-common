@@ -1,4 +1,4 @@
-package edu.ucsb.cs290.touch.to.text.remote.register;
+package edu.ucsb.cs290.touch.to.chat.remote.register;
 
 import java.io.Serializable;
 import java.security.PublicKey;

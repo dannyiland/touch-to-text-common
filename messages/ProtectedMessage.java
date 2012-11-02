@@ -1,4 +1,4 @@
-package edu.ucsb.cs290.touch.to.text.remote.messages;
+package edu.ucsb.cs290.touch.to.chat.remote.messages;
 
 import java.io.IOException;
 import java.io.Serializable;
