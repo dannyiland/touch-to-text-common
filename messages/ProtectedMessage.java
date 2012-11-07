@@ -2,19 +2,14 @@ package edu.ucsb.cs290.touch.to.chat.remote.messages;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.KeyPair;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.SignatureException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SealedObject;
+import java.security.GeneralSecurityException;
 
 public class ProtectedMessage implements Serializable {
 	private SealedObject message;
