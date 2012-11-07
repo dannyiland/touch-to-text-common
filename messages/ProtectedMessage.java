@@ -20,7 +20,7 @@ public class ProtectedMessage implements Serializable {
 	private SealedObject message;
 	private SealedObject messageKey;
 
-	public ProtectedMessage(Message message, PublicKey dest, KeyPair author) throws InvalidKeyException, SignatureException, NoSuchAlgorithmException, NoSuchProviderException, IOException, NoSuchPaddingException, IllegalBlockSizeException {
+	public ProtectedMessage(Message message, PublicKey dest, KeyPair author) throws GeneralSecurityException, IOException {
 		SignedMessage signedMessage = new SignedMessage(message, author);
 		KeyGenerator kg = KeyGenerator.getInstance("AES", "SC");
 		kg.init(128);
@@ -33,7 +33,7 @@ public class ProtectedMessage implements Serializable {
 		messageKey = new SealedObject(aesKey, d);
 	}
 	
-	public SignedMessage getMessage(PrivateKey recipient, PublicKey author) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchProviderException, IOException, ClassNotFoundException {
+	public SignedMessage getMessage(PrivateKey recipient, PublicKey author) throws GeneralSecurityException, IOException, ClassNotFoundException {
 		Key aesKey = (Key) messageKey.getObject(recipient,"SC");
 		return (SignedMessage) message.getObject(aesKey, "SC");
 	}
