@@ -1,5 +1,6 @@
 package edu.ucsb.cs290.touch.to.chat.remote.register;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.security.GeneralSecurityException;
 import java.security.KeyPair;
@@ -19,7 +20,7 @@ public class RegisterUser implements Serializable {
 	private final PublicKey publicKey;
 	private final int maxDelay;
 
-	public RegisterUser(String regId, KeyPair myKeys, int maxDelay) thows IOException, GeneralSecurityException {
+	public RegisterUser(String regId, KeyPair myKeys, int maxDelay) throws IOException, GeneralSecurityException {
 		this.regId = new SignedObject(regId, myKeys.getPrivate(),
 				Signature.getInstance("DSA", "SC"));
 		this.publicKey = myKeys.getPublic();
@@ -28,7 +29,7 @@ public class RegisterUser implements Serializable {
 
 	public String getRegId() throws IOException, ClassNotFoundException, GeneralSecurityException{
 		if (regId.verify(publicKey, Signature.getInstance("DSA", "SC")))
-			return regId.getObject();
+			return (String) regId.getObject();
 		throw new SignatureException();
 	}
 
