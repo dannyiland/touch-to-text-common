@@ -29,4 +29,14 @@ public class SignedMessage implements Serializable {
 	public PublicKey getAuthor() {
 		return authorKey;
 	}
+	
+	public String toString() {
+		try {
+			return getMessage(authorKey).toString();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "Error decrypting message";
+		}
+	}
 }
