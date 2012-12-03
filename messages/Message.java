@@ -16,4 +16,8 @@ public class Message implements Serializable {
 	public String toString() {
 		return message + "\n Sent at " + timeSent.toString();
 	}
+	
+	public Date getTimeSent() {
+		return timeSent;
+	}
 }
