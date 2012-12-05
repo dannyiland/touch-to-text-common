@@ -16,6 +16,7 @@ import java.security.SignedObject;
  * @author charlesmunger
  */
 public class RegisterUser implements Serializable {
+	public static final String FIELD_NAME = "RM";
 	private final SignedObject regId;
 	private final PublicKey publicKey;
 	private final int maxDelay;

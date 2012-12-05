@@ -9,6 +9,7 @@ import java.security.SignedObject;
 import java.util.UUID;
 
 public class TokenAuthMessage implements Serializable {
+	public static final String FIELD_NAME = "TM";
 	private final ProtectedMessage pm;
 	private final PublicKey destination;
 	private final SignedObject secretToken;
