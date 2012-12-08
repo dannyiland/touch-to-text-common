@@ -34,7 +34,7 @@ public class ProtectedMessage implements Serializable {
 		messageKey = new SealedObject(aesKey.getEncoded(), d);
 	}
 	
-	public SignedMessage getMessage(PrivateKey recipient, PublicKey author) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchProviderException, IOException, ClassNotFoundException {
+	public SignedMessage getMessage(PrivateKey recipient) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchProviderException, IOException, ClassNotFoundException {
 		Key aesKey = new SecretKeySpec((byte[]) messageKey.getObject(recipient,"SC"),"AES");
 		return (SignedMessage) message.getObject(aesKey, "SC");
 	}

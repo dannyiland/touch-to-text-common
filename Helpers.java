@@ -7,8 +7,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.security.GeneralSecurityException;
+import java.security.MessageDigest;
+import java.security.PublicKey;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.spongycastle.util.encoders.Base64;
 
 public abstract class Helpers {
 
@@ -31,6 +36,20 @@ public abstract class Helpers {
 		}
 		return temp;
 	}
+	
+	public static String getKeyFingerprint(PublicKey key ) {
+	MessageDigest sha1;
+	try {
+		sha1 = MessageDigest.getInstance("SHA1","SC");
+		byte[] a = Helpers.serialize(key);
+		byte[] digest = sha1.digest(a);
+		return new String(Base64.encode(digest));
+	} catch (GeneralSecurityException e) {
+		Logger.getLogger("touch-to-text").log(Level.SEVERE,
+				"SHA1 is missing!", e);
+		return "Key Verification Error";
+	}
+}
 	
 	public static byte[] serialize(Serializable s) {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
