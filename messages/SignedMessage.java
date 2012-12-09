@@ -12,6 +12,11 @@ import java.security.SignatureException;
 import java.security.SignedObject;
 
 public class SignedMessage implements Serializable {
+	/**
+	 * This version has a SignedObject, signed with DSA, and a DSA PublicKey of the author. 
+	 * The signedobject contains a Message version 1L.
+	 */
+	private static final long serialVersionUID = 1L;
 	private final SignedObject signedMessage;
 	private final PublicKey authorKey;
 	public SignedMessage(Message message, KeyPair author) throws InvalidKeyException, SignatureException, NoSuchAlgorithmException, NoSuchProviderException, IOException {

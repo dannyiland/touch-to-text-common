@@ -16,6 +16,10 @@ import java.security.SignedObject;
  * @author charlesmunger
  */
 public class RegisterUser implements Serializable {
+	/**
+	 * A signed string to register with GCM, the public key used to sign it, and an int max delay tolerated by this user.
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final String FIELD_NAME = "RM";
 	private final SignedObject regId;
 	private final PublicKey publicKey;
