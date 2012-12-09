@@ -13,8 +13,8 @@ public class TokenAuthMessage implements Serializable {
 	private final ProtectedMessage pm;
 	private final PublicKey destination;
 	private final SignedObject secretToken;
-        private final long earliest;
-        private final long latest;
+    private final long earliest;
+    private final long latest;
 	public TokenAuthMessage(ProtectedMessage pm, PublicKey destination, SignedObject secretToken, long earliest, long latest) {
 		this.destination = destination;
 		this.secretToken = secretToken;
@@ -45,4 +45,5 @@ public class TokenAuthMessage implements Serializable {
 	public ProtectedMessage getMessage() {
 		return pm;
 	}
+	
 }

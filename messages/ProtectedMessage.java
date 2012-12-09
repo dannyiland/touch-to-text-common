@@ -2,6 +2,7 @@ package edu.ucsb.cs290.touch.to.chat.remote.messages;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.KeyPair;
@@ -34,8 +35,10 @@ public class ProtectedMessage implements Serializable {
 		messageKey = new SealedObject(aesKey.getEncoded(), d);
 	}
 	
-	public SignedMessage getMessage(PrivateKey recipient) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchProviderException, IOException, ClassNotFoundException {
-		Key aesKey = new SecretKeySpec((byte[]) messageKey.getObject(recipient,"SC"),"AES");
+	public SignedMessage getMessage(PrivateKey recipient) throws GeneralSecurityException, IOException, ClassNotFoundException {
+		Cipher d = Cipher.getInstance("ElGamal/NONE/PKCS1PADDING", "SC");
+		d.init(Cipher.DECRYPT_MODE, recipient);
+		Key aesKey = new SecretKeySpec((byte[]) messageKey.getObject(d),"AES");
 		return (SignedMessage) message.getObject(aesKey, "SC");
 	}
 }
