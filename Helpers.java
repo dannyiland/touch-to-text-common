@@ -12,11 +12,15 @@ import java.security.MessageDigest;
 import java.security.PublicKey;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.spongycastle.jce.provider.BouncyCastleProvider;
 
 import org.spongycastle.util.encoders.Base64;
 
 public abstract class Helpers {
-
+    static {
+        java.security.Security.addProvider(new BouncyCastleProvider());
+    }
+    
 	public static Object deserialize(byte[] b) {
 		Object temp = null;
 		ByteArrayInputStream bis = new ByteArrayInputStream(b);
