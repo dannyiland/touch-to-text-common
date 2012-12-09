@@ -39,6 +39,8 @@ public class ProtectedMessage implements Serializable {
 		Cipher d = Cipher.getInstance("ElGamal/NONE/PKCS1PADDING", "SC");
 		d.init(Cipher.DECRYPT_MODE, recipient);
 		Key aesKey = new SecretKeySpec((byte[]) messageKey.getObject(d),"AES");
-		return (SignedMessage) message.getObject(aesKey, "SC");
+		Cipher c = Cipher.getInstance("AES","SC");
+		c.init(Cipher.DECRYPT_MODE, aesKey);
+		return (SignedMessage) message.getObject(c);
 	}
 }
