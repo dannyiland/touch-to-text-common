@@ -1,4 +1,4 @@
-package edu.ucsb.cs290.touch.to.chat.remote;
+package edu.ucsb.cs290.touch.to.text.remote;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
