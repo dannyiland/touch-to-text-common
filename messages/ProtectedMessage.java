@@ -7,9 +7,7 @@ import java.security.Key;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.Signature;
 import java.security.SignedObject;
-import java.util.UUID;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -29,7 +27,7 @@ public class ProtectedMessage implements Serializable {
 		this(signedMessage,dest,author,null);
 	}
 	
-	public ProtectedMessage(SignedMessage signedMessage, PublicKey dest, KeyPair author, KeyPair authorToken) throws GeneralSecurityException {
+	public ProtectedMessage(SignedMessage signedMessage, PublicKey dest, KeyPair author, SignedObject authorToken) throws GeneralSecurityException {
 		KeyGenerator kg = KeyGenerator.getInstance("AES", "SC");
 		kg.init(128);
 		Key aesKey = kg.generateKey();
@@ -44,11 +42,8 @@ public class ProtectedMessage implements Serializable {
 			d.init(Cipher.ENCRYPT_MODE, dest);
 			tempMessageKey = new SealedObject(aesKey.getEncoded(), d);
 			if (authorToken != null) {
-				c = Cipher.getInstance("AES", "SC");
 				c.init(Cipher.ENCRYPT_MODE, aesKey);
-				tempToken = new SealedObject(new SignedObject(UUID.randomUUID(),
-						authorToken.getPrivate(), Signature.getInstance("DSA",
-								"SC")), c);
+				tempToken = new SealedObject(authorToken, c);
 			}
 		} catch (IOException e) {
 			// Will never happen.
@@ -58,7 +53,7 @@ public class ProtectedMessage implements Serializable {
 		this.message = tempMessage;
 		this.newToken = tempToken;
 	}
-	
+
 	public SignedMessage getMessage(PrivateKey recipient) throws GeneralSecurityException, IOException, ClassNotFoundException {
 		Cipher d = Cipher.getInstance("ElGamal/NONE/PKCS1PADDING", "SC");
 		d.init(Cipher.DECRYPT_MODE, recipient);
@@ -70,5 +65,17 @@ public class ProtectedMessage implements Serializable {
 
 	public SealedObject getNewToken() {
 		return newToken;
+	}
+	
+	public SignedObject getToken(PrivateKey recipient) throws GeneralSecurityException, IOException, ClassNotFoundException {
+		if ( newToken != null ) {
+			Cipher d = Cipher.getInstance("ElGamal/NONE/PKCS1PADDING", "SC");
+			d.init(Cipher.DECRYPT_MODE, recipient);
+			Key aesKey = new SecretKeySpec((byte[]) messageKey.getObject(d),"AES");
+			Cipher c = Cipher.getInstance("AES","SC");
+			c.init(Cipher.DECRYPT_MODE, aesKey);
+			return (SignedObject) newToken.getObject(c);
+		}
+		return null;
 	}
 }
