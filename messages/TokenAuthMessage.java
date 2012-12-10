@@ -48,9 +48,10 @@ public class TokenAuthMessage implements Serializable {
 		return null;
 	}
 
-	public UUID getToken() throws IOException, ClassNotFoundException {
-		return (UUID) secretToken.getObject();
+        public SignedObject getToken() throws IOException, ClassNotFoundException {
+	        return secretToken;
 	}
+
 
 	public ProtectedMessage getMessage() {
 		return pm;
